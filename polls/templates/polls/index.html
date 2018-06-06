@@ -1,14 +1,26 @@
-{% load static %}
+{% extends 'polls/layouts/app.html' %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+{% block content %}
+    <div class="col-12">
+        <hr>
+        {% if latest_question_list %}
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    <h3>Questions</h3>
+                </li>
+                {% for question in latest_question_list %}
+                    {#        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> BAD#}
+                    <li class="list-group-item">
+                        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+    </div>
+{% endblock %}
 
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-{#        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> BAD#}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{#{% load static %}#}
+{##}
+{#<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />#}
