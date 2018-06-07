@@ -28,3 +28,10 @@ class IndexView(generic.ListView):
         """ Return all the tasks """
         return Task.objects.order_by('priority')
 
+
+def my_tasks(request):
+    tasks = Task.objects.order_by('priority')
+    return render(request, 'tasks/my_tasks/index.html', {'tasks': tasks})
+
+def create_task(request):
+    return render(request, 'tasks/my_tasks/create.html')

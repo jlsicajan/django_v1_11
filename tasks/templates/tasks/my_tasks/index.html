@@ -1,0 +1,46 @@
+{% extends 'tasks/layouts/app.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <hr>
+            <h3 class="text-muted">Welcome, here are your tasks</h3>
+            <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
+            <hr>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col hidden-sm-down">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td class="hidden-sm-down">{{ task.id }}</td>
+                        <td>{{ task.name }}</td>
+                        <td>
+                            {% if task.priority == '3' %}
+                                <span class="badge badge-danger">Higher</span>
+                            {% elif task.priority == '2' %}
+                                <span class="badge badge-warning">Medium</span>
+                            {% else %}
+                                <span class="badge badge-info">Lower</span>
+                            {% endif %}
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

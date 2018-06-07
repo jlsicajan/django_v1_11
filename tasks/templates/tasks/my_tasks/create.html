@@ -1,0 +1,33 @@
+{% extends 'tasks/layouts/app.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-6">
+            <hr>
+            <h3 class="text-muted">Create a new task</h3>
+            <form>
+                <div class="form-group">
+                    <label for="task_name">Task name</label>
+                    <input type="email" class="form-control" id="task_name" placeholder="Enter task name">
+                </div>
+                <div class="form-group">
+                    <label for="priority">Task priority</label>
+                    <select class="form-control" id="priority">
+                        <option class="3">Higher</option>
+                        <option class="2">Medium</option>
+                        <option class="1">Lower</option>
+                    </select>
+                </div>
+            </form>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        <div class="col-6">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
