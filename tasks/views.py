@@ -22,10 +22,9 @@ from .models import Task
 #GENERIC VIEWS
 class IndexView(generic.ListView):
     template_name = 'tasks/index.html'
+    context_object_name = 'tasks'
 
     def get_queryset(self):
-        """
-            Return all the tasks
-            """
-        return Task.objects.order_by('name')
+        """ Return all the tasks """
+        return Task.objects.order_by('priority')
 
