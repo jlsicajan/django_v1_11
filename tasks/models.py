@@ -19,3 +19,10 @@ class Task(models.Model):
         default=2,
     )
 
+
+class UserTask(models.Model):
+    def __str__(self):
+        return self.id
+
+    user_id = models.IntegerField()
+    task_id = models.IntegerField()

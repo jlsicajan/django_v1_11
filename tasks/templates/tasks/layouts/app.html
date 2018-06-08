@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {% block head %}
@@ -18,10 +21,10 @@
     <div class="collapse navbar-collapse" id="tasks_navbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link text-uppercase" href="{% url 'tasks:index' %}">Assigned tasks</a>
+                <a class="nav-link text-uppercase" href="{% url 'tasks:index' %}">Tasks</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase" href="{% url 'tasks:my_tasks' %}">My tasks</a>
+                <a class="nav-link text-uppercase" href="{% url 'tasks:my_tasks' %}">My assigned tasks</a>
             </li>
 
             <li class="nav-item dropdown">

@@ -5,6 +5,8 @@
         <div class="col-12">
             <hr>
             <h3 class="text-muted">Welcome, here are your tasks</h3>
+            <p>User info: {{ request.user|safe }}</p>
+            <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -29,7 +31,17 @@
                             {% endif %}
                         </td>
                         <td>
-
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-plus"></i> Assign to user</a>
+                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

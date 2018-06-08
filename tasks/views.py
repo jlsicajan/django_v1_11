@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 from .models import Task
 
@@ -27,7 +28,6 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """ Return all the tasks """
         return Task.objects.order_by('priority')
-
 
 def my_tasks(request):
     tasks = Task.objects.order_by('priority')
