@@ -45,6 +45,11 @@ def my_tasks(request):
     tasks = Task.objects.order_by('priority')
     return render(request, 'tasks/my_tasks/index.html', {'tasks': tasks})
 
+@login_required(login_url='/tasks/login/')
+def delete_task(request):
+    tasks = Task.objects.order_by('priority')
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks})
+
 
 @login_required(login_url='/tasks/login/')
 def create_task(request):

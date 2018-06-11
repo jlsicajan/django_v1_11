@@ -1,6 +1,7 @@
 {% extends 'tasks/layouts/app.html' %}
 
 {% block content %}
+        {% load static %}
     <div class="row">
         <div class="col-12">
             <hr>
@@ -19,7 +20,7 @@
                 </thead>
                 <tbody>
                 {% for task in tasks %}
-                    <tr>
+                    <tr data-task-id="{{ task.id }}">
                         <td class="hidden-xs-down">{{ task.id }}</td>
                         <td>{{ task.name }}</td>
                         <td>
@@ -38,7 +39,8 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                                    <a data-task-id="{{ task.id }}" class="dropdown-item delete_task"><i
+                                            class="fa fa-trash"></i> Delete</a>
                                     <a class="dropdown-item" href="#"><i class="fa fa-plus"></i> Assign to user</a>
                                     <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
                                 </div>
@@ -53,5 +55,6 @@
 {% endblock %}
 
 {% block scripts %}
-
+    <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
 {% endblock %}
