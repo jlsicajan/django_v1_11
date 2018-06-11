@@ -7,18 +7,29 @@
             <hr>
             <h3 class="text-muted">Welcome, here are your tasks</h3>
             <p>User info: {{ request.user|safe }}</p>
-            <p>View task: <strong>True</strong></p>
 
-            {% if perms.tasks %}
-                <p>Add task: <strong>{{ perms.tasks.add_task }}</strong></p>
-                <p>Edit task: <strong>{{ perms.tasks.change_task }}</strong></p>
-                <p>Delete task: <strong>{{ perms.tasks.delete_task }}</strong></p>
-            {% else %}
-                <p>You don't have permission to do anything in the task app.</p>
-            {% endif %}
+            <table class="table table-bordered">
+                <tr>
+                    <td>View task:</td>
+                    <td><strong>True</strong></td>
+                </tr>
+                <tr>
+                    <td>Add task:</td>
+                    <td><strong>{{ perms.tasks.add_task }}</strong></td>
+                </tr>
+                <tr>
+                    <td>Edit task:</td>
+                    <td><strong>{{ perms.tasks.change_task }}</strong></td>
+                </tr>
+                 <tr>
+                    <td>Delete task:</td>
+                    <td><strong>{{ perms.tasks.delete_task }}</strong></td>
+                </tr>
+            </table>
 
             {% if perms.tasks.add_task %}
                 <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
+                <hr>
             {% endif %}
 
             <table class="table table-bordered">
@@ -51,7 +62,6 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
                                     {% if perms.tasks.delete_task %}
                                         <a data-task-id="{{ task.id }}" class="dropdown-item delete_task"><i
                                                 class="fa fa-trash"></i> Delete</a>

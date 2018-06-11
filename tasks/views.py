@@ -37,15 +37,15 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """ Return all the tasks """
-        return Task.objects.order_by('priority')
+        return Task.objects.filter(created_by=self.request.user.id).order_by('-priority')
 
 
 @login_required(login_url='/tasks/login/')
 def my_tasks(request):
-    tasks = Task.objects.order_by('priority')
+    tasks = Task.objects.filter(assigned_to=request.user.id).order_by('-priority')
     return render(request, 'tasks/my_tasks/index.html', {'tasks': tasks})
 
-@login_required(login_url='/tasks/login/')
+@login_required(login_url='/tasks/delete/')
 def delete_task(request):
     tasks = Task.objects.order_by('priority')
     return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks})
@@ -60,9 +60,12 @@ def create_task(request):
         #     print(value)
         task_name = request.POST['task_name']
         priority = request.POST['priority']
+
         new_task = Task()
         new_task.name = task_name
         new_task.TASK_PRIORITY = priority
+        new_task.created_by = request.user
+        new_task.assigned_to = request.user
 
         new_task.save()
     tasks = Task.objects.order_by('priority')

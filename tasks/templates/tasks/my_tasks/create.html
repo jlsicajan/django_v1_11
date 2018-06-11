@@ -57,10 +57,14 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a data-task-id="{{ task.id }}" class="dropdown-item delete_task"><i
-                                            class="fa fa-trash"></i> Delete</a>
+                                    {% if perms.tasks.delete_task %}
+                                        <a data-task-id="{{ task.id }}" class="dropdown-item delete_task"><i
+                                                class="fa fa-trash"></i> Delete</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="#"><i class="fa fa-plus"></i> Assign to user</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+                                    {% if perms.tasks.change_task %}
+                                        <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </td>
