@@ -7,10 +7,11 @@
             <h3 class="text-muted">Welcome, here are your tasks</h3>
             <p>User info: {{ request.user|safe }}</p>
             <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
+
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col hidden-sm-down">#</th>
+                    <th scope="col hidden-xs-down">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Actions</th>
@@ -19,7 +20,7 @@
                 <tbody>
                 {% for task in tasks %}
                     <tr>
-                        <td class="hidden-sm-down">{{ task.id }}</td>
+                        <td class="hidden-xs-down">{{ task.id }}</td>
                         <td>{{ task.name }}</td>
                         <td>
                             {% if task.priority == '3' %}

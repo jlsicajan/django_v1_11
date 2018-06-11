@@ -48,7 +48,20 @@ def my_tasks(request):
 
 @login_required(login_url='/tasks/login/')
 def create_task(request):
-    return render(request, 'tasks/my_tasks/create.html')
+    if request.method == 'POST':
+        # for key in request.POST:
+        #     print(key)
+        #     value = request.POST[key]
+        #     print(value)
+        task_name = request.POST['task_name']
+        priority = request.POST['priority']
+        new_task = Task()
+        new_task.name = task_name
+        new_task.TASK_PRIORITY = priority
+
+        new_task.save()
+    tasks = Task.objects.order_by('priority')
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks})
 
 
 def logout(request):
