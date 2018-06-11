@@ -8,6 +8,8 @@ from .forms import LoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+
 from django.contrib import messages
 
 from .models import Task
@@ -47,6 +49,11 @@ def my_tasks(request):
 @login_required(login_url='/tasks/login/')
 def create_task(request):
     return render(request, 'tasks/my_tasks/create.html')
+
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect('/tasks')
 
 
 def login(request):
