@@ -1,0 +1,43 @@
+{% extends 'tasks/layouts/app.html' %}
+{% load form_tag %}
+{% block content %}
+    <div class="row align-items-center justify-content-center h-100">
+        <div class="col-4 bg-light border border-dark">
+
+            <h3 class="text-muted">Log in</h3>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if form.subject.errors %}
+                <ol>
+                    {% for error in form.subject.errors %}
+                        <li><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+            <form action="/tasks/login" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">Username</label>
+                    {{ form.username  | addclass:"form-control" }}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    {{ form.password | addclass:"form-control" }}
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-outline-succes">Log in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

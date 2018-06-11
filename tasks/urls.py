@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^create', views.create_task, name='create'),
     url(r'^my', views.my_tasks, name='my_tasks'),
+    url(r'^login', views.login, name='login'),
 ]
