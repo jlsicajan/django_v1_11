@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28c9de9c-0265-4d80-b501-4f5604e627e8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/tasks/static/tasks/js/tasks/ajax_functions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tasks/static/tasks/js/tasks/tasks_main_functions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tasks/templates/tasks/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/tasks/templates/tasks/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tasks/templates/tasks/layouts/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/tasks/templates/tasks/layouts/app.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tasks/templates/tasks/my_tasks/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/tasks/templates/tasks/my_tasks/create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tasks/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/tasks/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tasks/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/tasks/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,11 +25,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="create.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tasks/templates/tasks/my_tasks/create.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="75" column="81" lean-forward="true" selection-start-line="75" selection-start-column="81" selection-end-line="75" selection-end-column="81" />
+            <state relative-caret-position="630">
+              <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -62,11 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tasks/templates/tasks/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="57" selection-start-line="57" selection-end-line="58" selection-end-column="81" />
+            <state relative-caret-position="463">
+              <caret line="67" column="24" lean-forward="true" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -128,8 +121,8 @@
         <option value="$PROJECT_DIR$/tasks/views.py" />
         <option value="$PROJECT_DIR$/tasks/static/tasks/js/tasks/tasks_main_functions.js" />
         <option value="$PROJECT_DIR$/tasks/templates/tasks/layouts/app.html" />
-        <option value="$PROJECT_DIR$/tasks/templates/tasks/index.html" />
         <option value="$PROJECT_DIR$/tasks/templates/tasks/my_tasks/create.html" />
+        <option value="$PROJECT_DIR$/tasks/templates/tasks/index.html" />
       </list>
     </option>
   </component>
@@ -144,7 +137,7 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="64" />
-    <option name="y" value="-11" />
+    <option name="y" value="-779" />
     <option name="width" value="1303" />
     <option name="height" value="780" />
   </component>
@@ -663,17 +656,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tasks/templates/tasks/index.html">
+    <entry file="file://$PROJECT_DIR$/tasks/templates/tasks/my_tasks/create.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="57" selection-start-line="57" selection-end-line="58" selection-end-column="81" />
+        <state relative-caret-position="630">
+          <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tasks/templates/tasks/my_tasks/create.html">
+    <entry file="file://$PROJECT_DIR$/tasks/templates/tasks/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="75" column="81" lean-forward="true" selection-start-line="75" selection-start-column="81" selection-end-line="75" selection-end-column="81" />
+        <state relative-caret-position="463">
+          <caret line="67" column="24" lean-forward="true" selection-start-line="67" selection-start-column="24" selection-end-line="67" selection-end-column="24" />
         </state>
       </provider>
     </entry>

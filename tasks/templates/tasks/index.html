@@ -1,13 +1,25 @@
 {% extends 'tasks/layouts/app.html' %}
 
 {% block content %}
-        {% load static %}
+    {% load static %}
     <div class="row">
         <div class="col-12">
             <hr>
             <h3 class="text-muted">Welcome, here are your tasks</h3>
             <p>User info: {{ request.user|safe }}</p>
-            <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
+            <p>View task: <strong>True</strong></p>
+
+            {% if perms.tasks %}
+                <p>Add task: <strong>{{ perms.tasks.add_task }}</strong></p>
+                <p>Edit task: <strong>{{ perms.tasks.change_task }}</strong></p>
+                <p>Delete task: <strong>{{ perms.tasks.delete_task }}</strong></p>
+            {% else %}
+                <p>You don't have permission to do anything in the task app.</p>
+            {% endif %}
+
+            {% if perms.tasks.add_task %}
+                <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
+            {% endif %}
 
             <table class="table table-bordered">
                 <thead>
@@ -39,10 +51,15 @@
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a data-task-id="{{ task.id }}" class="dropdown-item delete_task"><i
-                                            class="fa fa-trash"></i> Delete</a>
+
+                                    {% if perms.tasks.delete_task %}
+                                        <a data-task-id="{{ task.id }}" class="dropdown-item delete_task"><i
+                                                class="fa fa-trash"></i> Delete</a>
+                                    {% endif %}
                                     <a class="dropdown-item" href="#"><i class="fa fa-plus"></i> Assign to user</a>
-                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+                                    {% if perms.tasks.change_task %}
+                                        <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </td>
