@@ -1,0 +1,34 @@
+{% extends 'tasks/layouts/app.html' %}
+
+{% block content %}
+    {% load static %}
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <hr>
+            <h3 class="text-muted">Assign user to the task</h3>
+            <form action="/tasks/assign" method="post">
+                {% csrf_token %}
+                <input type="hidden" class="form-control" name="task_id" id="task_id" value="{{ task_id }}">
+                <div class="form-group">
+                    <label for="priority">User</label>
+                    <select class="form-control" id="priority" name="priority" required="required">
+                        <option value="3">Higher</option>
+                        <option value="2">Medium</option>
+                        <option value="1">Lower</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Assign</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-sm-6">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
+{% endblock %}
