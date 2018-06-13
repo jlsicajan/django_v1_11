@@ -51,7 +51,7 @@ def delete_task(request):
     return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.order_by('priority')})
 
 
-@login_required(login_url='/tasks/login/')css
+@login_required(login_url='/tasks/login/')
 def create_task(request):
     if request.method == 'POST':
         task_name = request.POST['task_name']

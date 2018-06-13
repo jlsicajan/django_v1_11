@@ -3,3 +3,4 @@ venv/*
 htmlcov*
 .sass-cache/*
 tasks/static/tasks/css/*
+.idea/workspace.xml
