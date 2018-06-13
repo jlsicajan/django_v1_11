@@ -70,7 +70,8 @@ def create_task(request):
 
         new_task.save()
     tasks = Task.objects.order_by('priority')
-    return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks})
+    users = User.objects.all()
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks, 'users': users})
 
 
 @login_required(login_url='/tasks/login/')
