@@ -1,3 +1,5 @@
 venv/*
 *.pyc
 htmlcov*
+.sass-cache/*
+tasks/static/tasks/css/*
