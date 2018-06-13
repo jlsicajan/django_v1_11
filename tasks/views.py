@@ -48,17 +48,12 @@ def my_tasks(request):
 
 @login_required(login_url='/tasks/delete/')
 def delete_task(request):
-    tasks = Task.objects.order_by('priority')
-    return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks})
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.order_by('priority')})
 
 
 @login_required(login_url='/tasks/login/')
 def create_task(request):
     if request.method == 'POST':
-        # for key in request.POST:
-        #     print(key)
-        #     value = request.POST[key]
-        #     print(value)
         task_name = request.POST['task_name']
         priority = request.POST['priority']
 
@@ -67,18 +62,13 @@ def create_task(request):
         new_task.TASK_PRIORITY = priority
         new_task.created_by = request.user
         new_task.assigned_to = request.user
-
         new_task.save()
-    tasks = Task.objects.order_by('priority')
-    users = User.objects.all()
-    return render(request, 'tasks/my_tasks/create.html', {'tasks': tasks, 'users': users})
+
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.order_by('priority'), 'users': User.objects.all()})
 
 
 @login_required(login_url='/tasks/login/')
 def assign(request):
-    if request.method == 'POST':
-        print('hello there')
-
     return render(request, 'tasks/my_tasks/assign.html', {'users': User.objects.all()})
 
 
@@ -93,18 +83,11 @@ def login(request):
         if form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
-            print('============ CHECKING FOR ==========')
-            print('Username: ' + username)
-            print('Password: ' + password)
 
-        user = authenticate(username=username, password=password)
-        print('=========== USER AUTHENTICATE ==============')
-        print(user)
-        if user is not None:
+        if authenticate(username=username, password=password) is not None:
             auth_login(request, user)
 
         return HttpResponseRedirect('/tasks')
-
     else:
         form = LoginForm()
 
