@@ -29,7 +29,6 @@ from .models import Task
 #     return render(request, 'polls/results.html', {'question': question})
 
 # GENERIC VIEWS
-
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'tasks/index.html'
     context_object_name = 'tasks'
@@ -42,36 +41,29 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
 @login_required(login_url='/tasks/login/')
 def my_tasks(request):
-    tasks = Task.objects.filter(assigned_to=request.user.id).order_by('-priority')
-    return render(request, 'tasks/my_tasks/index.html', {'tasks': tasks})
+    return render(request, 'tasks/my_tasks/index.html', {'tasks': Task.objects.my_tasks(request.user.id)})
 
 
 @login_required(login_url='/tasks/delete/')
 def delete_task(request):
-    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.order_by('priority')})
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.from_lower()})
 
 
 @login_required(login_url='/tasks/login/')
 def create_task(request):
     if request.method == 'POST':
-        task_name = request.POST['task_name']
-        priority = request.POST['priority']
-
         new_task = Task()
-        new_task.name = task_name
-        new_task.TASK_PRIORITY = priority
+        new_task.name = request.POST['task_name']
+        new_task.priority = request.POST['priority']
+        new_task.assigned_to = User.objects.get(pk=request.POST['assigned_to'])
         new_task.created_by = request.user
-        new_task.assigned_to = request.user
         new_task.save()
 
-    return render(request, 'tasks/my_tasks/create.html',
-                  {'tasks': Task.objects.order_by('priority'), 'users': User.objects.all()})
-
+    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.from_higher(), 'users': User.objects.all()})
 
 @login_required(login_url='/tasks/login/')
 def assign(request):
     return render(request, 'tasks/my_tasks/assign.html', {'users': User.objects.all()})
-
 
 def logout(request):
     auth_logout(request)

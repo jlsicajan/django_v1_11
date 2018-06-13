@@ -8,6 +8,12 @@ class TodoQuerySet(QuerySet):
     def my_tasks(self, user_id):
         return self.filter(created_by=user_id).order_by('-priority')
 
+    def from_higher(self):
+        return self.order_by('-priority')
+
+    def from_lower(self):
+        return self.order_by('priority')
+
 class Task(models.Model):
     def __str__(self):
         return self.name
