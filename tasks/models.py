@@ -2,7 +2,11 @@ import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.query import QuerySet
 
+class TodoQuerySet(QuerySet):
+    def my_tasks(self, user_id):
+        return self.filter(created_by=user_id).order_by('-priority')
 
 class Task(models.Model):
     def __str__(self):
@@ -13,6 +17,7 @@ class Task(models.Model):
         (2, 'MEDIUM'),
         (1, 'LOWER'),
     )
+
     name = models.CharField(max_length=100)
     priority = models.CharField(
         max_length=1,
@@ -21,12 +26,4 @@ class Task(models.Model):
     )
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='example2')
     assigned_to = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='assigned_to')
-    # assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
-
-#
-# class UserTask(models.Model):
-#     def __str__(self):
-#         return self.id
-#
-#     user_id = models.IntegerField()
-#     task_id = models.IntegerField()
+    objects = TodoQuerySet.as_manager()  # Activate custom QuerySet

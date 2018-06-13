@@ -36,8 +36,8 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     login_url = '/tasks/login/'
 
     def get_queryset(self):
-        """ Return all the tasks """
-        return Task.objects.filter(created_by=self.request.user.id).order_by('-priority')
+        """ Return all the tasks of this user """
+        return Task.objects.my_tasks(self.request.user.id)
 
 
 @login_required(login_url='/tasks/login/')
@@ -51,7 +51,7 @@ def delete_task(request):
     return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.order_by('priority')})
 
 
-@login_required(login_url='/tasks/login/')
+@login_required(login_url='/tasks/login/')css
 def create_task(request):
     if request.method == 'POST':
         task_name = request.POST['task_name']
@@ -64,7 +64,8 @@ def create_task(request):
         new_task.assigned_to = request.user
         new_task.save()
 
-    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.order_by('priority'), 'users': User.objects.all()})
+    return render(request, 'tasks/my_tasks/create.html',
+                  {'tasks': Task.objects.order_by('priority'), 'users': User.objects.all()})
 
 
 @login_required(login_url='/tasks/login/')
@@ -79,16 +80,8 @@ def logout(request):
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-
-        if authenticate(username=username, password=password) is not None:
-            auth_login(request, user)
-
+        if LoginForm(request.POST).is_valid() and authenticate(username=request.POST['username'],
+                                                               password=request.POST['password']) is not None:
+            auth_login(request, request.POST['username'])
         return HttpResponseRedirect('/tasks')
-    else:
-        form = LoginForm()
-
-    return render(request, 'tasks/auth/login.html', {'form': form})
+    return render(request, 'tasks/auth/login.html', {'form': LoginForm()})

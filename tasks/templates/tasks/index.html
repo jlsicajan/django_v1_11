@@ -28,8 +28,7 @@
             </table>
 
             {% if perms.tasks.add_task %}
-                <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a>
-                <hr>
+                <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a><hr>
             {% endif %}
 
             <table class="table table-bordered">
