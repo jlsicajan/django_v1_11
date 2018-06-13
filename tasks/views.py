@@ -77,7 +77,7 @@ def create_task(request):
 def assign(request):
     if request.method == 'POST':
         print('hello there')
-        
+
     return render(request, 'tasks/my_tasks/assign.html', {'users': User.objects.all()})
 
 
