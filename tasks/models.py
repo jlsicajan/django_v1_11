@@ -14,6 +14,9 @@ class TodoQuerySet(QuerySet):
     def from_lower(self):
         return self.order_by('priority')
 
+    def assigned_to_me(self, user_id):
+        return self.filter(assigned_to=user_id).order_by('-priority')
+
 class Task(models.Model):
     def __str__(self):
         return self.name

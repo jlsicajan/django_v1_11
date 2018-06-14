@@ -5,45 +5,52 @@
     <div class="row">
         <div class="col-12">
             <hr>
-            <h3 class="text-muted">Welcome, here are your tasks</h3>
-            <p>User info: {{ request.user|safe }}</p>
-
             <table class="table table-bordered">
                 <tr>
-                    <td>View task:</td>
-                    <td><strong>True</strong></td>
+                    <td class="font-weight-bold">First name:</td>
+                    <td>{{ request.user.first_name }}</td>
+                    <td class="font-weight-bold">Username:</td>
+                    <td>{{ request.user|safe }}</td>
                 </tr>
                 <tr>
-                    <td>Add task:</td>
-                    <td><strong>{{ perms.tasks.add_task }}</strong></td>
+                    <td class="font-weight-bold">View task:</td>
+                    <td>True</td>
+                    <td class="font-weight-bold">Add task:</td>
+                    <td>{{ perms.tasks.add_task }}</td>
                 </tr>
                 <tr>
-                    <td>Edit task:</td>
-                    <td><strong>{{ perms.tasks.change_task }}</strong></td>
-                </tr>
-                <tr>
-                    <td>Delete task:</td>
-                    <td><strong>{{ perms.tasks.delete_task }}</strong></td>
+                    <td class="font-weight-bold">Edit task:</td>
+                    <td>{{ perms.tasks.change_task }}</td>
+                    <td class="font-weight-bold">Delete task:</td>
+                    <td>{{ perms.tasks.delete_task }}</td>
                 </tr>
             </table>
-
+        </div>
+    </div>
+    <div class="row mb-3 mt-4">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <h3 class="text-muted">Welcome, here are your tasks</h3>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
             {% if perms.tasks.add_task %}
-                <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">New</a><hr>
+                <a class="btn btn-outline-success" href="{% url 'tasks:create' %}">Add Task</a>
             {% endif %}
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col hidden-xs-down">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Priority</th>
+                    <th scope="col">Assigned to</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for task in tasks %}
                     <tr data-task-id="{{ task.id }}">
-                        <td class="hidden-xs-down">{{ task.id }}</td>
                         <td>{{ task.name }}</td>
                         <td>
                             {% if task.priority == '3' %}
@@ -54,6 +61,7 @@
                                 <span class="badge badge-info">Lower</span>
                             {% endif %}
                         </td>
+                        <td>{{ task.assigned_to.first_name }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -62,13 +70,16 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {% if perms.tasks.delete_task %}
-                                        <a data-task-id="{{ task.id }}" class="dropdown-item delete_task">
-                                            <i class="fa fa-trash"></i> Delete</a>
+                                        <a data-task-id="{{ task.id }}"
+                                           class="dropdown-item delete_task cursor-pointer">
+                                            <i class="fa fa-trash"></i> Delete
+                                        </a>
                                     {% endif %}
-                                    <a class="dropdown-item assign_to_user" data-task-id="{{ task.id }}">
+                                    <a class="dropdown-item assign_to_user cursor-pointer" data-task-id="{{ task.id }}">
                                         <i class="fa fa-plus"></i> Assign to user</a>
                                     {% if perms.tasks.change_task %}
-                                        <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+                                        <a class="dropdown-item edit_task cursor-pointer" data-task-id="{{ task.id }}">
+                                            <i class="fa fa-edit"></i> Edit</a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -82,6 +93,12 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript">
+        var csfr_token_value = '{{ csrf_token }}';
+        var tasks = {{ tasks_json|safe }};
+    </script>
     <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
     <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/edit_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/delete_functions.js" %}"></script>
 {% endblock %}

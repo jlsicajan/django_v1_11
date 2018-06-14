@@ -11,7 +11,7 @@ function db_delete_task(callback, task_id) {
             console.log(data);
             if(data){
                 callback(task_id);
-                alert('Taks deleted');
+                alert('Task deleted');
             }else{
                 alert('The task was no deleted');
             }

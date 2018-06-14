@@ -13,20 +13,6 @@ import json
 from .forms import LoginForm
 from .models import Task
 
-
-# def index(request):
-#     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-#     context = {'latest_question_list': latest_question_list}
-#     return render(request, 'polls/index.html', context)
-#
-# def detail(request, question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/detail.html', {'question': question})
-#
-# def results(request, question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/results.html', {'question': question})
-
 # GENERIC VIEWS
 class IndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'tasks/index.html'
@@ -40,7 +26,7 @@ class IndexView(LoginRequiredMixin, generic.ListView):
 
 @login_required(login_url='/tasks/login/')
 def my_tasks(request):
-    return render(request, 'tasks/my_tasks/index.html', {'tasks': Task.objects.my_tasks(request.user.id)})
+    return render(request, 'tasks/my_tasks/index.html', {'tasks': Task.objects.assigned_to_me(request.user.id)})
 
 
 @login_required(login_url='/tasks/delete/')
@@ -50,6 +36,7 @@ def delete_task(request):
 
 @login_required(login_url='/tasks/login/')
 def create_task(request):
+
     if request.method == 'POST':
         new_task = Task()
         new_task.name = request.POST['task_name']
@@ -62,9 +49,6 @@ def create_task(request):
     tasks_json = {}
     for task_info in Task.objects.all():
         tasks_json[task_info.id] = [task_info.name, task_info.priority, task_info.assigned_to.first_name]
-
-    print('=hhello there')
-    print(tasks_json)
 
     return render(request, 'tasks/my_tasks/create.html', {
         'tasks': Task.objects.from_higher(), 'users': User.objects.all(),
@@ -94,8 +78,23 @@ def logout(request):
 
 def login(request):
     if request.method == 'POST':
-        if LoginForm(request.POST).is_valid() and authenticate(username=request.POST['username'],
-                                                               password=request.POST['password']) is not None:
-            auth_login(request, request.POST['username'])
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            print('============ CHECKING FOR ==========')
+            print('Username: ' + username)
+            print('Password: ' + password)
+
+        user = authenticate(username=username, password=password)
+        print('=========== USER AUTHENTICATE ==============')
+        print(user)
+        if user is not None:
+            auth_login(request, user)
+
         return HttpResponseRedirect('/tasks')
-    return render(request, 'tasks/auth/login.html', {'form': LoginForm()})
+
+    else:
+        form = LoginForm()
+
+    return render(request, 'tasks/auth/login.html', {'form': form})
