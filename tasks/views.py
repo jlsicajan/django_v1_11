@@ -1,17 +1,16 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 from django.views import generic
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
-from django.contrib import messages
+from django.db.models import ProtectedError
+import json
 
+from .forms import LoginForm
 from .models import Task
 
 
@@ -58,12 +57,35 @@ def create_task(request):
         new_task.assigned_to = User.objects.get(pk=request.POST['assigned_to'])
         new_task.created_by = request.user
         new_task.save()
+        return HttpResponseRedirect('/tasks/create')
 
-    return render(request, 'tasks/my_tasks/create.html', {'tasks': Task.objects.from_higher(), 'users': User.objects.all()})
+    tasks_json = {}
+    for task_info in Task.objects.all():
+        tasks_json[task_info.id] = task_info
+
+    print('=hhello there')
+    print(tasks_json)
+
+    return render(request, 'tasks/my_tasks/create.html', {
+        'tasks': Task.objects.from_higher(), 'users': User.objects.all(),
+        'tasks_json': tasks_json})
+
 
 @login_required(login_url='/tasks/login/')
 def assign(request):
     return render(request, 'tasks/my_tasks/assign.html', {'users': User.objects.all()})
+
+@login_required(login_url='/tasks/login/')
+def delete_task(request):
+    task_id = request.POST.get('task_id', None)
+
+    try:
+        Task.objects.filter(id=task_id).delete()
+    except ProtectedError:
+        return HttpResponse(False)
+
+    return HttpResponse(True)
+
 
 def logout(request):
     auth_logout(request)

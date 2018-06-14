@@ -12,4 +12,7 @@ urlpatterns = [
     url(r'^my', views.my_tasks, name='my_tasks'),
     url(r'^login', views.login, name='login'),
     url(r'^logout', views.logout, name='logout'),
+
+    # ajax routes
+    url(r'^ajax/delete_task', views.delete_task, name='delete_task'),
 ]

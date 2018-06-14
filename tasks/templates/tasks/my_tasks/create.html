@@ -33,7 +33,7 @@
                                 <span class="badge badge-info">Lower</span>
                             {% endif %}
                         </td>
-                        <td>{{ task }}</td>
+                        <td>{{ tasks_json|safe }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -65,6 +65,12 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript">
+    var csfr_token_value = '{{ csrf_token }}';
+
+    </script>
     <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
     <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/edit_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/delete_functions.js" %}"></script>
 {% endblock %}
