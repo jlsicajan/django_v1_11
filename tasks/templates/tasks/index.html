@@ -45,7 +45,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Assigned to</th>
-                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -62,28 +61,6 @@
                             {% endif %}
                         </td>
                         <td>{{ task.assigned_to.first_name }}</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {% if perms.tasks.delete_task %}
-                                        <a data-task-id="{{ task.id }}"
-                                           class="dropdown-item delete_task cursor-pointer">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </a>
-                                    {% endif %}
-                                    <a class="dropdown-item assign_to_user cursor-pointer" data-task-id="{{ task.id }}">
-                                        <i class="fa fa-plus"></i> Assign to user</a>
-                                    {% if perms.tasks.change_task %}
-                                        <a class="dropdown-item edit_task cursor-pointer" data-task-id="{{ task.id }}">
-                                            <i class="fa fa-edit"></i> Edit</a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
