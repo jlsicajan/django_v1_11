@@ -17,15 +17,5 @@ function db_delete_task(callback, task_id) {
             }
         }
     });
-    // $.ajaxSetup({
-    //     data: {csrfmiddlewaretoken: csfr_token_value},
-    // });
-    // $.post("ajax/delete_task/", {
-    //     task_id: task_id
-    // }, function (data) {
-    //     console.log("done!");
-    //     console.log(data);
-    //     callback(task_id);
-    // });
-
 }
+

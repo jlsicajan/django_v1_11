@@ -61,14 +61,14 @@ def create_task(request):
 
     tasks_json = {}
     for task_info in Task.objects.all():
-        tasks_json[task_info.id] = task_info
+        tasks_json[task_info.id] = [task_info.name, task_info.priority, task_info.assigned_to.first_name]
 
     print('=hhello there')
     print(tasks_json)
 
     return render(request, 'tasks/my_tasks/create.html', {
         'tasks': Task.objects.from_higher(), 'users': User.objects.all(),
-        'tasks_json': tasks_json})
+        'tasks_json': json.dumps(tasks_json)})
 
 
 @login_required(login_url='/tasks/login/')

@@ -11,6 +11,7 @@
         <div class="col-12 col-sm-8 col-md-8">
             <hr>
             <h3 class="text-muted">Tasks created by you</h3>
+            <button class="btn btn-outline-info" onclick="get_tasks()">tasks</button>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -33,7 +34,7 @@
                                 <span class="badge badge-info">Lower</span>
                             {% endif %}
                         </td>
-                        <td>{{ tasks_json|safe }}</td>
+                        <td>{{ task.assigned_to.first_name }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -66,8 +67,8 @@
 
 {% block scripts %}
     <script type="text/javascript">
-    var csfr_token_value = '{{ csrf_token }}';
-
+        var csfr_token_value = '{{ csrf_token }}';
+        var tasks = {{ tasks_json|safe }};
     </script>
     <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
     <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
