@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
-from django.views import generic
+from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate
@@ -14,7 +14,7 @@ from .forms import LoginForm
 from .models import Task
 
 # GENERIC VIEWS
-class IndexView(LoginRequiredMixin, generic.ListView):
+class IndexView(LoginRequiredMixin, ListView):
     template_name = 'tasks/index.html'
     context_object_name = 'tasks'
     login_url = '/tasks/login/'
@@ -22,6 +22,10 @@ class IndexView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """ Return all the tasks of this user """
         return Task.objects.my_tasks(self.request.user.id)
+
+# LIST VIEW
+# class TaskListView(LoginRequiredMixin, ListView):
+#     model = Task
 
 
 @login_required(login_url='/tasks/login/')
