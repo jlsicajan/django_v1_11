@@ -2,31 +2,7 @@
 
 {% block content %}
     {% load static %}
-    <div class="row">
-        <div class="col-12">
-            <hr>
-            <table class="table table-bordered">
-                <tr>
-                    <td class="font-weight-bold">First name:</td>
-                    <td>{{ request.user.first_name }}</td>
-                    <td class="font-weight-bold">Username:</td>
-                    <td>{{ request.user|safe }}</td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">View task:</td>
-                    <td>True</td>
-                    <td class="font-weight-bold">Add task:</td>
-                    <td>{{ perms.tasks.add_task }}</td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">Edit task:</td>
-                    <td>{{ perms.tasks.change_task }}</td>
-                    <td class="font-weight-bold">Delete task:</td>
-                    <td>{{ perms.tasks.delete_task }}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    {% include 'tasks/elements/user_info.html' %}
     <div class="row mb-3 mt-4">
         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
             <h3 class="text-muted">Welcome, here are your tasks</h3>

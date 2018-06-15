@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+        <table class="table table-bordered">
+            <tr>
+                <td class="font-weight-bold">First name:</td>
+                <td>{{ request.user.first_name }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">View task:</td>
+                <td>True</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Edit task:</td>
+                <td>{{ perms.tasks.change_task }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+        <table class="table table-bordered">
+            <tr>
+                <td class="font-weight-bold">Username:</td>
+                <td>{{ request.user|safe }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Add task:</td>
+                <td>{{ perms.tasks.add_task }}</td>
+            </tr>
+            <tr>
+                <td class="font-weight-bold">Delete task:</td>
+                <td>{{ perms.tasks.delete_task }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

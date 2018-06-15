@@ -2,31 +2,8 @@
 
 {% block content %}
     {% load static %}
-    <div class="row">
-        <div class="col-12">
-            <hr>
-            <table class="table table-bordered">
-                <tr>
-                    <td class="font-weight-bold">First name:</td>
-                    <td>{{ request.user.first_name }}</td>
-                    <td class="font-weight-bold">Username:</td>
-                    <td>{{ request.user|safe }}</td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">View task:</td>
-                    <td>True</td>
-                    <td class="font-weight-bold">Add task:</td>
-                    <td>{{ perms.tasks.add_task }}</td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">Edit task:</td>
-                    <td>{{ perms.tasks.change_task }}</td>
-                    <td class="font-weight-bold">Delete task:</td>
-                    <td>{{ perms.tasks.delete_task }}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    <hr>
+    {% include 'tasks/elements/user_info.html' %}
     <div class="row mb-3 mt-4">
         <div class="col-12 col-sm-6 col-md-6 col-lg-6">
             <h3 class="text-muted">Welcome, tasks list</h3>
@@ -43,7 +20,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Priority</th>
+                    <th scope="col">Priority <small class="text-muted">(Select to change)</small></th>
                     <th scope="col">Assigned to</th>
                     <th scope="col">Created by</th>
                     <th scope="col">Actions</th>
@@ -58,13 +35,11 @@
                             </a>
                         </td>
                         <td>
-                            {% if task.priority == '3' %}
-                                <span class="badge badge-danger">Higher</span>
-                            {% elif task.priority == '2' %}
-                                <span class="badge badge-warning">Medium</span>
-                            {% else %}
-                                <span class="badge badge-info">Lower</span>
-                            {% endif %}
+                                <select class="form-control" id="task_priority">
+                                    <option value="3" {% if task.priority == '3' %} selected {% endif %}>Higher</option>
+                                    <option value="2" {% if task.priority == '2' %} selected {% endif %}>Medium</option>
+                                    <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
+                                </select>
                         </td>
                         <td>{{ task.assigned_to.first_name }}</td>
                         <td>{{ task.created_by.first_name }} - {{ task.created_by|safe }}</td>
@@ -98,4 +73,9 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript">
+        var csfr_token_value = '{{ csrf_token }}';
+    </script>
+    <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/delete_functions.js" %}"></script>
 {% endblock %}
