@@ -21,11 +21,13 @@
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Priority
-                        <small class="text-muted">(Select to change)</small>
+                        {% if perms.tasks.change_task %}<small class="text-muted">(Select to change)</small>{% endif %}
                     </th>
                     <th scope="col">Assigned to</th>
                     <th scope="col">Created by</th>
-                    <th scope="col">Actions</th>
+                    {% if perms.tasks %}
+                        <th scope="col">Actions</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -37,35 +39,52 @@
                             </a>
                         </td>
                         <td>
-                            <select class="form-control task_priority" id="task_priority" data-task-id="{{ task.id }}">
-                                <option value="3" {% if task.priority == '3' %} selected {% endif %}>Higher</option>
-                                <option value="2" {% if task.priority == '2' %} selected {% endif %}>Medium</option>
-                                <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
-                            </select>
+                            {% if perms.tasks.change_task %}
+                                <select class="form-control task_priority" id="task_priority"
+                                        data-task-id="{{ task.id }}">
+                                    <option value="3" {% if task.priority == '3' %} selected {% endif %}>Higher</option>
+                                    <option value="2" {% if task.priority == '2' %} selected {% endif %}>Medium</option>
+                                    <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
+                                </select>
+                            {% else %}
+                                {% if task.priority == '3' %}
+                                    <span class="badge badge-danger">Higher</span>
+                                {% elif task.priority == '2' %}
+                                    <span class="badge badge-warning">Medium</span>
+                                {% else %}
+                                    <span class="badge badge-info">Lower</span>
+                                {% endif %}
+                            {% endif %}
                         </td>
                         <td>{{ task.assigned_to.first_name }}</td>
                         <td>{{ task.created_by.first_name }} - {{ task.created_by|safe }}</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {% if perms.tasks.delete_task %}
-                                        <a data-task-id="{{ task.id }}"
-                                           class="dropdown-item delete_task cursor-pointer">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </a>
-                                    {% endif %}
+                        {% if perms.tasks %}
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="dropdownMenuButton"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        {% if perms.tasks.delete_task %}
+                                            <a data-task-id="{{ task.id }}"
+                                               class="dropdown-item delete_task cursor-pointer">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </a>
+                                        {% endif %}
 
-                                    {% if perms.tasks.change_task %}
-                                        <a class="dropdown-item edit_task cursor-pointer" data-task-id="{{ task.id }}">
-                                            <i class="fa fa-edit"></i> Edit</a>
-                                    {% endif %}
+                                        {% if perms.tasks.change_task %}
+                                            <a class="dropdown-item edit_task cursor-pointer"
+                                               data-task-id="{{ task.id }}">
+                                                <i class="fa fa-edit"></i> Edit</a>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
+
+
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>
