@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^tasks/', include('tasks.urls')),
 
     url(r'^admin/', admin.site.urls),
-    url(r'^.*$', RedirectView.as_view(pattern_name='tasks:index', permanent=False), name='main_index'),
+    url(r'^.*$', RedirectView.as_view(pattern_name='tasks:task_list', permanent=False), name='main_index'),
 ]
