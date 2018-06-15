@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic.base import RedirectView
+
 from . import views
 
 urlpatterns = [
@@ -22,4 +24,5 @@ urlpatterns = [
     url(r'^tasks/', include('tasks.urls')),
 
     url(r'^admin/', admin.site.urls),
+    url(r'^.*$', RedirectView.as_view(pattern_name='tasks:index', permanent=False), name='main_index'),
 ]

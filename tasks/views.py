@@ -58,6 +58,15 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = 'tasks/class_based_views/tasks/task_create.html'
     fields = ['name', 'priority', 'assigned_to']
+    success_url = '/thanks/'
+
+    def form_valid(self, form):
+        print("is valid! ++++++++++++")
+        form.instance.name = self.request.name
+        form.instance.priority = self.request.priority
+        form.instance.created_by = self.request.user
+
+        return super(TaskCreateView, self).form_valid(form)
 
 
 @login_required(login_url='/tasks/login/')

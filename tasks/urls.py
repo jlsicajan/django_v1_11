@@ -15,9 +15,9 @@ urlpatterns = [
     url(r'^logout', views.logout, name='logout'),
 
     # class-based-views
-    url(r'^generic/', TaskListView.as_view(), name='task_list'),
-    url(r'^detail/(?P<pk>[0-9]+)/$', TaskDetailView.as_view(), name='task_detail'),
-    url(r'^create_task$', TaskCreateView.as_view(), name='task_create'),
+    url(r'^generic/$', TaskListView.as_view(), name='task_list'),
+    url(r'^generic/detail/(?P<pk>[0-9]+)/$', TaskDetailView.as_view(), name='task_detail'),
+    url(r'^generic/create/', TaskCreateView.as_view(), name='task_create'),
     # ajax routes
     url(r'^ajax/delete_task', views.delete_task, name='delete_task'),
 ]
