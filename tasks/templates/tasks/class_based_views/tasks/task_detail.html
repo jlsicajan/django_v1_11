@@ -1,0 +1,47 @@
+{% extends 'tasks/layouts/app.html' %}
+
+{% block content %}
+    {% load static %}
+    <div class="row">
+        <div class="col-12 col-sm-8 col-md-8">
+            <hr>
+            <h3 class="text-muted">Tasks information</h3>
+            <table class="table table-bordered">
+                <tr>
+                    <td class="font-weight-bold">Name</td>
+                    <td>{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Priority</td>
+                    <td>{{ object.priority }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Assigned to</td>
+                    <td>{{ object.assigned_to.user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Created by</td>
+                    <td>{{ object.created_by.user.first_name }}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Actions</td>
+                    <td>
+                        <button class="btn btn-outline-warning">Edit</button>
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    {% include 'tasks/modals/select_user.html' %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        var csfr_token_value = '{{ csrf_token }}';
+    </script>
+    <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/edit_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/delete_functions.js" %}"></script>
+{% endblock %}

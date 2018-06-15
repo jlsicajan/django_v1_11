@@ -15,14 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from tasks.views import TaskListView
 from . import views
 
 urlpatterns = [
     url(r'^polls/', include('polls.urls')),
     url(r'^tasks/', include('tasks.urls')),
 
-    # class-based-views
-    url(r'^generic/', TaskListView.as_view(), name='task_list'),
     url(r'^admin/', admin.site.urls),
 ]

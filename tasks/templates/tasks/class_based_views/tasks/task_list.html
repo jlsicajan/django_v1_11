@@ -23,7 +23,11 @@
                 <tbody>
                 {% for task in tasks_from_class_based_views %}
                     <tr data-task-id="{{ task.id }}">
-                        <td>{{ task.name }}</td>
+                        <td>
+                            <a href="{% url 'tasks:task_detail' task.id %}">
+                                {{ task.name }}
+                            </a>
+                        </td>
                         <td>
                             {% if task.priority == '3' %}
                                 <span class="badge badge-danger">Higher</span>
@@ -42,7 +46,8 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {% if perms.tasks.delete_task %}
-                                        <a data-task-id="{{ task.id }}" class="dropdown-item delete_task cursor-pointer">
+                                        <a data-task-id="{{ task.id }}"
+                                           class="dropdown-item delete_task cursor-pointer">
                                             <i class="fa fa-trash"></i> Delete
                                         </a>
                                     {% endif %}

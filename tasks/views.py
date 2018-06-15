@@ -1,6 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
+
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate
@@ -27,6 +30,8 @@ class IndexView(LoginRequiredMixin, ListView):
 # # LIST VIEW
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
+    ordering = ['-priority']
+
     template_name = 'tasks/class_based_views/tasks/task_list.html'
     login_url = '/tasks/login/'
     context_object_name = 'tasks_from_class_based_views'
@@ -37,6 +42,15 @@ class TaskListView(LoginRequiredMixin, ListView):
         context['now'] = timezone.now()
         context['users'] = User.objects.all()
 
+        return context
+
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = 'tasks/class_based_views/tasks/task_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskDetailView, self).get_context_data(**kwargs)
+        context['now'] = timezone.now()
         return context
 
 
