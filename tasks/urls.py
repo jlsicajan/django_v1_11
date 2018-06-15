@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from tasks.views import TaskListView, TaskDetailView
+from tasks.views import TaskListView, TaskDetailView, TaskCreateView
 
 from . import views
 
@@ -17,7 +17,7 @@ urlpatterns = [
     # class-based-views
     url(r'^generic/', TaskListView.as_view(), name='task_list'),
     url(r'^detail/(?P<pk>[0-9]+)/$', TaskDetailView.as_view(), name='task_detail'),
-
+    url(r'^create_task$', TaskCreateView.as_view(), name='task_create'),
     # ajax routes
     url(r'^ajax/delete_task', views.delete_task, name='delete_task'),
 ]

@@ -3,20 +3,16 @@
 {% block content %}
     {% load static %}
     <div class="row">
-        <div class="col-12 col-sm-4 col-md-4">
+        <div class="col-12">
             <hr>
-            <h3 class="text-muted">Create a new task</h3>
-            {% include 'tasks/forms/tasks/form.html' %}
-        </div>
-        <div class="col-12 col-sm-8 col-md-8">
-            <hr>
-            <h3 class="text-muted">Tasks created by you</h3>
+            <h3 class="text-muted">All the tasks</h3>
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Priority</th>
                     <th scope="col">Assigned to</th>
+                    <th scope="col">Created by</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -38,6 +34,7 @@
                             {% endif %}
                         </td>
                         <td>{{ task.assigned_to.first_name }}</td>
+                        <td>{{ task.created_by.first_name }} - {{ task.created_by|safe }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -47,12 +44,11 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {% if perms.tasks.delete_task %}
                                         <a data-task-id="{{ task.id }}"
-                                           class="dropdown-item delete_task cursor-pointer">
+                                           class="dropdown-item cursor-pointer">
                                             <i class="fa fa-trash"></i> Delete
                                         </a>
                                     {% endif %}
-                                    <a class="dropdown-item assign_to_user cursor-pointer" data-task-id="{{ task.id }}">
-                                        <i class="fa fa-plus"></i> Assign to user</a>
+
                                     {% if perms.tasks.change_task %}
                                         <a class="dropdown-item edit_task cursor-pointer" data-task-id="{{ task.id }}">
                                             <i class="fa fa-edit"></i> Edit</a>
@@ -66,16 +62,7 @@
             </table>
         </div>
     </div>
-    {% include 'tasks/modals/select_user.html' %}
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-        var csfr_token_value = '{{ csrf_token }}';
-        var tasks = {{ object_list|safe }};
-    </script>
-    <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
-    <script src="{% static "tasks/js/tasks/tasks_main_functions.js" %}"></script>
-    <script src="{% static "tasks/js/tasks/edit_functions.js" %}"></script>
-    <script src="{% static "tasks/js/tasks/delete_functions.js" %}"></script>
 {% endblock %}

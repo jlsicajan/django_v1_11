@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -52,6 +53,11 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
         context = super(TaskDetailView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    template_name = 'tasks/class_based_views/tasks/task_create.html'
+    fields = ['name', 'priority', 'assigned_to']
 
 
 @login_required(login_url='/tasks/login/')
