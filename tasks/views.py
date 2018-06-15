@@ -8,6 +8,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.db.models import ProtectedError
+from django.utils import timezone
 import json
 
 from .forms import LoginForm
@@ -23,9 +24,20 @@ class IndexView(LoginRequiredMixin, ListView):
         """ Return all the tasks of this user """
         return Task.objects.my_tasks(self.request.user.id)
 
-# LIST VIEW
-# class TaskListView(LoginRequiredMixin, ListView):
-#     model = Task
+# # LIST VIEW
+class TaskListView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = 'tasks/class_based_views/tasks/task_list.html'
+    login_url = '/tasks/login/'
+    context_object_name = 'tasks_from_class_based_views'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        context['users'] = User.objects.all()
+
+        return context
 
 
 @login_required(login_url='/tasks/login/')
