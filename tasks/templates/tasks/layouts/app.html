@@ -22,12 +22,13 @@
 
         <div class="collapse navbar-collapse px-5" id="tasks_navbar">
             <ul class="navbar-nav mr-auto">
+{#                this options works without class-bassed view#}
                 <li class="nav-item">
-                    <a class="nav-link text-uppercase" href="{% url 'tasks:index' %}">Tasks</a>
+                    <a class="nav-link text-uppercase" href="{% url 'tasks:create' %}">Create task <small>(old)</small></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-uppercase" href="{% url 'tasks:my_tasks' %}">My assigned tasks</a>
-                </li>
+{#                <li class="nav-item">#}
+{#                    <a class="nav-link text-uppercase" href="{% url 'tasks:my_tasks' %}">My assigned tasks</a>#}
+{#                </li>#}
                 <li class="nav-item">
                     <a class="nav-link text-uppercase" href="{% url 'tasks:task_list' %}">Index view</a>
                 </li>

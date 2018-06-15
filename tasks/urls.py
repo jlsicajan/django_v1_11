@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^generic/create/', TaskCreateView.as_view(), name='task_create'),
     # ajax routes
     url(r'^ajax/delete_task', views.delete_task, name='delete_task'),
+    url(r'^ajax/change_priority_task', views.change_priority_task, name='change_priority_task'),
 ]

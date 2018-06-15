@@ -20,7 +20,9 @@
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Priority <small class="text-muted">(Select to change)</small></th>
+                    <th scope="col">Priority
+                        <small class="text-muted">(Select to change)</small>
+                    </th>
                     <th scope="col">Assigned to</th>
                     <th scope="col">Created by</th>
                     <th scope="col">Actions</th>
@@ -35,11 +37,11 @@
                             </a>
                         </td>
                         <td>
-                                <select class="form-control" id="task_priority">
-                                    <option value="3" {% if task.priority == '3' %} selected {% endif %}>Higher</option>
-                                    <option value="2" {% if task.priority == '2' %} selected {% endif %}>Medium</option>
-                                    <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
-                                </select>
+                            <select class="form-control task_priority" id="task_priority" data-task-id="{{ task.id }}">
+                                <option value="3" {% if task.priority == '3' %} selected {% endif %}>Higher</option>
+                                <option value="2" {% if task.priority == '2' %} selected {% endif %}>Medium</option>
+                                <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
+                            </select>
                         </td>
                         <td>{{ task.assigned_to.first_name }}</td>
                         <td>{{ task.created_by.first_name }} - {{ task.created_by|safe }}</td>
@@ -52,7 +54,7 @@
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     {% if perms.tasks.delete_task %}
                                         <a data-task-id="{{ task.id }}"
-                                           class="dropdown-item cursor-pointer">
+                                           class="dropdown-item delete_task cursor-pointer">
                                             <i class="fa fa-trash"></i> Delete
                                         </a>
                                     {% endif %}
@@ -78,4 +80,5 @@
     </script>
     <script src="{% static "tasks/js/tasks/ajax_functions.js" %}"></script>
     <script src="{% static "tasks/js/tasks/delete_functions.js" %}"></script>
+    <script src="{% static "tasks/js/tasks/change_priority_functions.js" %}"></script>
 {% endblock %}

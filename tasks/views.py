@@ -31,7 +31,6 @@ class IndexView(LoginRequiredMixin, ListView):
 # # LIST VIEW
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
-    ordering = ['-priority']
 
     template_name = 'tasks/class_based_views/tasks/task_list.html'
     login_url = '/tasks/login/'
@@ -110,6 +109,18 @@ def delete_task(request):
 
     try:
         Task.objects.filter(id=task_id).delete()
+    except ProtectedError:
+        return HttpResponse(False)
+
+    return HttpResponse(True)
+
+@login_required(login_url='/tasks/login/')
+def change_priority_task(request):
+    task_id = request.POST.get('task_id', None)
+    new_priority = request.POST.get('priority_id', None)
+
+    try:
+        Task.objects.filter(id=task_id).update(priority=new_priority)
     except ProtectedError:
         return HttpResponse(False)
 
