@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -13,6 +13,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.db.models import ProtectedError
 from django.utils import timezone
+from django.urls import reverse_lazy
 import json
 
 from .forms import LoginForm
@@ -61,11 +62,13 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         print("is valid! ++++++++++++")
-        form.instance.name = self.request.name
-        form.instance.priority = self.request.priority
         form.instance.created_by = self.request.user
-
         return super(TaskCreateView, self).form_valid(form)
+
+class TaskDelete(DeleteView):
+    model = Task
+    template_name = 'tasks/class_based_views/tasks/task_delete.html'
+    success_url = reverse_lazy('tasks:task_list')
 
 
 @login_required(login_url='/tasks/login/')

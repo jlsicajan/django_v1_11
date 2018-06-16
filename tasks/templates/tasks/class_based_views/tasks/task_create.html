@@ -8,18 +8,19 @@
             <h3 class="text-muted">Create a task</h3>
             <form action="" method="post">
                 {% csrf_token %}
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    {{ form.name  | addclass:"form-control" }}
-                </div>
-                <div class="form-group">
-                    <label for="Priority">Priority</label>
-                    {{ form.priority  | addclass:"form-control" }}
-                </div>
-                <div class="form-group">
-                    <label for="assigned_to">Assigned to</label>
-                    {{ form.assigned_to  | addclass:"form-control" }}
-                </div>
+                {{ form.as_p }}
+{#                <div class="form-group">#}
+{#                    <label for="name">Name</label>#}
+{#                    {{ form.name  | addclass:"form-control" }}#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="Priority">Priority</label>#}
+{#                    {{ form.priority  | addclass:"form-control" }}#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="assigned_to">Assigned to</label>#}
+{#                    {{ form.assigned_to  | addclass:"form-control" }}#}
+{#                </div>#}
                 <div class="form-group">
                     <input class="btn btn-outline-succes" type="submit" value="Save"/>
                 </div>
