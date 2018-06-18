@@ -28,7 +28,7 @@ class Task(models.Model):
     )
 
     name = models.CharField(max_length=100)
-    priority = models.CharField(
+    priority = models.IntegerField(
         max_length=1,
         choices=TASK_PRIORITY,
         default=2,
