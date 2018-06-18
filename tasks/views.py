@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -61,14 +61,31 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     success_url = '/thanks/'
 
     def dispatch(self, request, *args, **kwargs):
-        if not request.user.has_perm('tasks.create_task'):
+        if not request.user.has_perm('tasks.create_task') and not request.user.has_perm('tasks.change_task'):
             return HttpResponse("You don't have permission")
+
         return super(TaskCreateView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         print("is valid! ++++++++++++")
         form.instance.created_by = self.request.user
         return super(TaskCreateView, self).form_valid(form)
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    template_name = 'tasks/class_based_views/tasks/task_update.html'
+    fields = ['name', 'priority', 'assigned_to']
+    success_url = '/generic/'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('tasks.change_task'):
+            return HttpResponse("You don't have permission")
+
+        return super(TaskUpdateView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super(TaskUpdateView, self).form_valid(form)
 
 class TaskDelete(DeleteView):
     model = Task

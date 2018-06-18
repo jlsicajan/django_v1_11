@@ -75,7 +75,7 @@
                                         {% endif %}
 
                                         {% if perms.tasks.change_task %}
-                                            <a class="dropdown-item edit_task cursor-pointer"
+                                            <a href="{% url 'tasks:task_update' task.id %}" class="dropdown-item cursor-pointer"
                                                data-task-id="{{ task.id }}">
                                                 <i class="fa fa-edit"></i> Edit</a>
                                         {% endif %}

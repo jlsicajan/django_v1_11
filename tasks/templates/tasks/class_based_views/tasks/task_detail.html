@@ -27,7 +27,7 @@
                     <td class="font-weight-bold">Actions</td>
                     <td>
                         {% if perms.tasks.change_task %}
-                            <button class="btn btn-outline-warning">Edit</button>
+                            <a href="{% url 'tasks:task_update' object.id %}" class="btn btn-outline-warning">Edit</a>
                         {% endif %}
 
                         {% if perms.tasks.delete_task %}
