@@ -26,8 +26,13 @@
                 <tr>
                     <td class="font-weight-bold">Actions</td>
                     <td>
-                        <button class="btn btn-outline-warning">Edit</button>
-                        <a href="{% url 'tasks:task_delete' object.id %}" class="btn btn-outline-danger">Delete</a>
+                        {% if perms.tasks.change_task %}
+                            <button class="btn btn-outline-warning">Edit</button>
+                        {% endif %}
+
+                        {% if perms.tasks.delete_task %}
+                            <a href="{% url 'tasks:task_delete' object.id %}" class="btn btn-outline-danger">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
             </table>

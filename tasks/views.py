@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render
 
 from django.views.generic.list import ListView
@@ -60,6 +60,11 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'priority', 'assigned_to']
     success_url = '/thanks/'
 
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('tasks.create_task'):
+            return HttpResponse("You don't have permission")
+        return super(TaskCreateView, self).dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         print("is valid! ++++++++++++")
         form.instance.created_by = self.request.user
@@ -69,6 +74,12 @@ class TaskDelete(DeleteView):
     model = Task
     template_name = 'tasks/class_based_views/tasks/task_delete.html'
     success_url = reverse_lazy('tasks:task_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.has_perm('tasks.delete_task'):
+            # return HttpResponseForbidden()
+            return HttpResponse("You don't have permission")
+        return super(TaskDelete, self).dispatch(request, *args, **kwargs)
 
 
 @login_required(login_url='/tasks/login/')

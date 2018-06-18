@@ -42,9 +42,9 @@
                             {% if perms.tasks.change_task %}
                                 <select class="form-control task_priority" id="task_priority"
                                         data-task-id="{{ task.id }}">
-                                    <option value="3" {% if task.priority == '3' %} selected {% endif %}>Higher</option>
-                                    <option value="2" {% if task.priority == '2' %} selected {% endif %}>Medium</option>
-                                    <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
+                                    <option value="3" {% if task.priority == 3 %} selected {% endif %}>Higher</option>
+                                    <option value="2" {% if task.priority == 2 %} selected {% endif %}>Medium</option>
+                                    <option value="1" {% if task.priority == 1 %} selected {% endif %}>Lower</option>
                                 </select>
                             {% else %}
                                 {% if task.priority == 3 %}
