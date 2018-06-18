@@ -25,7 +25,7 @@
                     </th>
                     <th scope="col">Assigned to</th>
                     <th scope="col">Created by</th>
-                    {% if perms.tasks %}
+                    {% if perms.tasks and perms.tasks.change_task or perms.tasks.delete_task %}
                         <th scope="col">Actions</th>
                     {% endif %}
                 </tr>
@@ -47,9 +47,9 @@
                                     <option value="1" {% if task.priority == '1' %} selected {% endif %}>Lower</option>
                                 </select>
                             {% else %}
-                                {% if task.priority == '3' %}
+                                {% if task.priority == 3 %}
                                     <span class="badge badge-danger">Higher</span>
-                                {% elif task.priority == '2' %}
+                                {% elif task.priority == 2 %}
                                     <span class="badge badge-warning">Medium</span>
                                 {% else %}
                                     <span class="badge badge-info">Lower</span>
@@ -58,7 +58,7 @@
                         </td>
                         <td>{{ task.assigned_to.first_name }}</td>
                         <td>{{ task.created_by.first_name }} - {{ task.created_by|safe }}</td>
-                        {% if perms.tasks %}
+                        {% if perms.tasks and perms.tasks.change_task or perms.tasks.delete_task %}
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button"
